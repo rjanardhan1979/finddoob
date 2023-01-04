@@ -1,0 +1,4 @@
+<div id="{{component_id}}" name="n_{{component_id}}" class="w-full" hx-get="/editableEg/" hx-trigger="click" hx-target="#{{component_id}}"
+    hx-swap="outerHTML" hx-vars="'component_id': '{{component_id}}', 'beforeVal': '{{object[colname]}}', 'id': '{{object['id']}}', 'field': '{{colname}}' ">
+    {{object[colname]}}
+</div>

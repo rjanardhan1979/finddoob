@@ -1,0 +1,76 @@
+<tbody id="mainTable" name="mainTable">
+    {% for rec in table_contents %}
+    {% set rec_index = loop %}
+    <tr class="border border-dotted border-gray-500">
+        {% for col in cols %}
+
+        {% with object = rec, colname = col, color = mydf_diff_colors, difference = mydf_diff, index = rec_index.index,
+        id = rec.id, component_id = 'c' + '_' + col + '_' + rec.id|string, color_id = 'color' + '_' + col + '_' + rec.id|string %}
+
+        {% if not cols[col].is_user_gen %}
+        {% if not cols[col].is_data %}
+        {% include 'partials/' + col + '.html' %}
+        {% endif %}
+        {% endif %}
+
+        {% if cols[col].is_data %}
+        <td name="tableData" class="{{cols[col].bg_color}} {{cols[col].width}}" id="{{col}}_{{rec.sku}}">
+            {% include 'partials/value.html'%}
+            {% include 'partials/change.html'%}
+        </td>
+        {% endif %}
+
+        {% endwith %}
+
+        {% endfor %}
+
+        <td class="border border-dotted border-gray-500" id="{{rec.sku}}"></td>
+        <td class="border border-dotted border-gray-500 w-64"></td>
+
+    </tr>
+
+    {% endfor %}
+</tbody>
+
+<script>
+
+    showChart()
+
+    function showChart() {
+        cdat = JSON.parse('{{sparkline|tojson|safe}}')
+        tab = JSON.parse('{{table_contents|tojson|safe}}')
+        console.log(cdat)
+        var layout = {
+            height: 60,
+            width: 230,
+            margin: {
+                l: 1,
+                r: 1,
+                b: 1,
+                t: 1,
+                pad: 0
+            },
+            xaxis: {
+                visible: false,
+            },
+            yaxis: {
+
+                visible: false,
+                zeroline: false
+            }
+        };
+
+        for (let i = 0; i < tab.length; i++) {
+
+            var trace1 = {
+                x: (cdat['x0']),
+                y: (cdat['y0'][i]),
+                type: 'line'
+            };
+            var data = [trace1]
+            Plotly.newPlot(tab[i]['sku'], data, layout, { displayModeBar: false });
+        }
+    }
+
+
+</script>

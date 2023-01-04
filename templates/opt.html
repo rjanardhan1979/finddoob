@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{{url_for('static', path='/css/output.css')}}"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{{url_for('static', path='/js/htmx.min.js')}}"></script>
+    <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+    <title>HTMX Table Codename Raka</title>
+</head>
+
+<body class="max-h-screen">
+
+    <div class="grid grid-cols-12 grid-rows-6 min-h-screen pl-1 pr-1">
+        <div class="col-span-12 row-span-1 grid grid-cols-12 grid-rows-2">
+
+            <div class="navbar col-span-12 row-span-1 bg-slate-400 flex">
+                <div class="logo flex items-center justify-center p-4">
+                    <h1 class="font-bold text-4xl text-green-900 p-4">Kirigi Ka Kahar</h1>
+                </div>
+                <div class="navlist flex items-center justify-end w-8/12 ">
+                    <ul class="flex">
+                        <li class="text-white text-xl m-3">
+                            <a class="text-white text-xl m-3 hover:text-gray-200" href="/index/">Home</a>
+                        </li>
+                        <li class="text-white text-xl m-3">
+                            <a class="text-white text-xl m-3 hover:text-gray-200" href="/main/">Main</a>
+                        </li>
+                        <li class="text-white text-xl m-3">
+                            <a class="text-white text-xl m-3 hover:text-gray-200" href="/opt/">Refine</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="side-nav-gap col-span-2 row-span-1 bg-gray-100"></div>
+            <div class="section-gap col-span-10 row-span-1 bg-white flex justify-start p-2" name="dd_wrapper"
+                id="dd_wrapper">
+
+                <div class="flex flex-wrap align-middle w-60 p-2" id="market_dd">
+                    <label class="mt-2 text-slate-500 font-bold" for="market">Select Market</label>
+                    <select class="text-center h-1/2 w-60 rounded-md bg-gray-100 border border-solid border-gray-500"
+                        name="market" id="market">
+                        {% for market in markets %}
+                        <option class="m-2" value={{market[0]|replace(" ", " _")}}>{{market[0]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="flex flex-wrap align-middle w-60 p-2" id="product_line_dd">
+                    <label class="mt-2 text-slate-500 font-bold" for="product_line">Select Product Line</label>
+                    <select class="text-center h-1/2 w-60 rounded-md bg-gray-100 border border-solid border-gray-500"
+                        name="product_line" id="product_line">
+                        {% for pl in product_line %}
+                        <option class="m-2" value={{pl[0]}}>{{pl[0]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="flex flex-wrap align-middle w-60 p-2" id="brand_dd">
+                    <label class="mt-2 text-slate-500 font-bold" for="brand">Select Brand</label>
+                    <select class="text-center h-1/2 w-60 rounded-md bg-gray-100 border border-solid border-gray-500"
+                        name="brand" id="brand">
+                        {% for brand in brands %}
+                        <option class="m-2" value={{brand[0]}}>{{brand[0]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="flex flex-wrap align-middle w-60 p-2" id="sub_brand_dd">
+                    <label class="mt-2 text-slate-500 font-bold" for="sub_brand">Select Sub Brand</label>
+                    <select class="text-center h-1/2 w-60 rounded-md bg-gray-100 border border-solid border-gray-500"
+                        name="sub_brand" id="sub_brand">
+                        {% for sub_brand in sub_brands %}
+                        <option class="m-2" value={{sub_brand[0]}}>{{sub_brand[0]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="flex flex-wrap align-middle w-60 p-2" id="component_dd">
+                    <label class="mt-2 text-slate-500 font-bold" for="component">Components</label>
+                    <select class="text-center h-1/2 w-60 rounded-md bg-gray-100 border border-solid border-gray-500"
+                        name="component" id="component" hx-get="/filter_comp_to_skus/" hx-trigger="load, change"
+                        hx-target="#mainTable" hx-swap="outerHTML" hx-include="[name = 'dd_wrapper']">
+                        {% for component in components %}
+                        <option class="m-2" value={{component[0]}}>{{component[0]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+        <div class="side-nav col-span-2 row-span-5 bg-gray-100 border-solid pl-2"></div>
+
+        <div class="section col-span-10 row-span-5  grid grid-cols-12 grid-rows-2 gap-2">
+            <div
+                class="col-span-12 row-span-1 flex justify-center p-2 border border-dotted border-gray-300 overflow-auto h-[35rem]">
+                <table class="border border-dotted w-full text-center overflow-x-scroll overflow-y-scroll text-sm">
+                    <thead>
+
+                        <tr class="border border-solid border-gray-500 text-blue-900">
+                            {% for item in array %}
+                            <th class="{{array[item].header_color}} {{array[item].text_color}}">{{array[item].header}}
+                            </th>
+                            {% endfor %}
+                        </tr>
+
+                    </thead>
+                    <tbody id="mainTable" name="mainTable">
+
+                    </tbody>
+                    <tfoot id="footy">
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div id="chart" class="col-span-12 row-span-1 border border-dotted border-gray-300">
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{{url_for('static', path='/css/output.css')}}"> -->
+    <script src="{{url_for('static', path='/js/htmx.min.js')}}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>HTMX Table Codename Raka</title>
+</head>
+
+<body class="max-h-screen">
+
+    <div class="grid grid-cols-12 grid-rows-6 min-h-screen pl-1 pr-1">
+        <div class="col-span-12 row-span-1 grid grid-cols-12 grid-rows-2">
+
+            <div class="navbar col-span-12 row-span-1 bg-slate-400 flex">
+                <div class="logo flex items-center justify-center p-4">
+                    <h1 class="font-bold text-4xl text-green-900 p-4">Kirigi Ka Kahar</h1>
+                </div>
+                <div class="navlist flex items-center justify-end w-8/12 ">
+                    <ul class="flex">
+                        <li class="text-white text-xl m-3">
+                            <a class="text-white text-xl m-3 hover:text-gray-200" href="/index/">Home</a>
+                        </li>
+                        <li class="text-white text-xl m-3">
+                            <a class="text-white text-xl m-3 hover:text-gray-200" href="/main/">Main</a>
+                        </li>
+                        <li class="text-white text-xl m-3">
+                            <a class="text-white text-xl m-3 hover:text-gray-200" href="/opt/">Refine</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="side-nav-gap col-span-2 row-span-1 bg-gray-100"></div>
+            <div class="section-gap col-span-10 row-span-1 bg-white"></div>
+
+        </div>
+
+
+        <div class="side-nav col-span-2 row-span-5 bg-gray-100 border-solid pl-2"></div>
+
+        <div class="section col-span-10 row-span-5 bg-white p-4 flex flex-wrap" id="btntxtcontainer">
+
+            <div class="flex w-screen">
+
+                <button type="button" name="btn"
+                    class="bg-red-500 w-20 h-12 rounded-md hover:bg-red-400 text-white font-semibold"
+                    hx-get="/txtchange/" hx-trigger="click" hx-target="#btntxtcontainer" hx-swap="outerHTML"
+                    hx-vars="vis: '{{startbtnText}}'">
+                    {{startbtnText}}
+                </button>
+
+                <input id="txtbox" type="text" value="" name="txtbox"
+                    class="invisible ml-4 shadow-sm h-12 w-40 text-center bg-gray-100 border-solid mr-5">
+
+                <div class="p-2 border border-dotted border-gray-500  text-gray-500 w-4/5 h-16">Toggle button
+                    illustration
+                    using HTMX and FastAPI. No Javascript used.</div>
+
+            </div>
+
+
+            <div class="flex w-screen">
+                    {% for name in input_names %}
+                    <input type="text" contenteditable="true" class="h-20 w-36 bg-slate-100" value="10" name="k_{{name}}"
+                        id="i_{{name}}" hx-post="/form_example/" hx-trigger="change" hx-target="this"
+                        hx-replace="outerHTML">
+                    {% endfor %}
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+</body>
+
+</html>

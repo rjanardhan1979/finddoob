@@ -1,0 +1,14 @@
+<div class="section col-span-10 row-span-5 bg-white flex align-middle items-start justify-start p-4" id="btntxtcontainer">
+
+
+    <button type="button" name="btn" class="bg-red-500 w-20 h-12 rounded-md hover:bg-red-400  text-white font-semibold" hx-get="/txtchange/"
+        hx-trigger="click" hx-target="#btntxtcontainer" hx-swap="outerHTML" hx-vars="vis: '{{getbtnText}}'">
+        {{getbtnText}}
+    </button>
+
+    <input id="txtbox" type="text" value="I am seen" name="txtbox"
+        class="{{visibility}} ml-4 shadow-sm h-12 w-40 text-center bg-gray-100 border-solid mr-5">
+
+        <div class="p-2 border border-dotted border-gray-500 text-gray-500 w-3/5 h-16">Toggle button illustration using HTMX and FastAPI. No Javascript used.</div>
+    </div>
+</div>

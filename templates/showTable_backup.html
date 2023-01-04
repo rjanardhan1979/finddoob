@@ -1,0 +1,163 @@
+<tbody id="mainTable" name="mainTable">
+    {% for rec in table_contents %}
+    <tr class="border border-dotted border-gray-500">
+
+        <td class="hover:text-red-400 hover:cursor-pointer border border-dotted border-gray-500 w-24"
+            hx-get="/skuselect/" hx-trigger="click" hx-target="#chart" hx-swap="outerHTML settle:1s"
+            hx-vars="val: '{{rec.sku}}'">{{rec.sku}}
+        </td>
+        <td class="border border-dotted border-gray-500 w-14">{{rec.sku_desc}}</td>
+        <td class="border border-dotted border-gray-500 w-14">{{rec.cost}}</td>
+        <td class="border border-dotted border-gray-500 w-14">{{rec.asp}}</td>
+        <td class="border border-dotted border-gray-500 w-14">{{rec.margin}}</td>
+
+        <td class="bg-gray-200 w-24">{{rec['y_2017']}}</td>
+        <td class="w-24">
+            <div class="w-full">
+                {{rec['y_2018']}}
+            </div>
+            <div class=" {{mydf_diff_colors[loop.index-1].y_2018}}  rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2018}}
+            </div>
+        </td>
+
+        <td class="bg-gray-200 w-24">
+            <div class="w-full">
+                {{rec['y_2019']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2019}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2019}}
+            </div>
+        </td>
+        <td class="w-24">
+            <div class="w-full">
+                {{rec['y_2020']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2020}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2020}}
+            </div>
+        </td>
+        <td class="bg-gray-200 w-24">
+            <div class="w-full">
+                {{rec['y_2021']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2021}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2021}}
+            </div>
+        </td>
+        <td class="w-24">
+            <div class="w-full">
+                {{rec['y_2022']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2022}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2022}}
+            </div>
+        </td>
+        <td class="bg-gray-200 w-24">
+            <div class="w-full">
+                {{rec['y_2023']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2023}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2023}}
+            </div>
+        </td>
+        <td class="w-24">
+            <div class="w-full">
+                {{rec['y_2024']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2024}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2024}}
+            </div>
+        </td>
+        <td class="bg-gray-200 w-24">
+            <div class="w-full">
+                {{rec['y_2025']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2025}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2025}}
+            </div>
+        </td>
+        <td class="w-24">
+            <div class="w-full">
+                {{rec['y_2026']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2026}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2026}}
+            </div>
+        </td>
+        <td class="bg-gray-200 w-24">
+            <div id="newVal" name="newVal" class="w-full" hx-get="/editableEg/" hx-trigger="click" hx-target="#newVal" hx-swap="outerHTML" hx-vars="'element': 'div', 'recval': '{{rec['y_2027']}}' ">
+                {{rec['y_2027']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2027}} rounded-full w-1/2 m-1 text-center font-semibold" contenteditable>
+                {{mydf_diff[loop.index-1].y_2027}}
+            </div>
+        </td>
+        <td class="w-24">
+            <div class="w-full">
+                {{rec['y_2028']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2028}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2028}}
+            </div>
+        </td>
+        <td class="bg-gray-200 w-24">
+            <div class="w-full">
+                {{rec['y_2029']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2029}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2029}}
+            </div>
+        </td>
+        <td class="w-24">
+            <div class="w-full">
+                {{rec['y_2030']}}
+            </div>
+            <div class="{{mydf_diff_colors[loop.index-1].y_2030}} rounded-full w-1/2 m-1 text-center font-semibold">
+                {{mydf_diff[loop.index-1].y_2030}}
+            </div>
+        </td>
+
+        <td class="border border-dotted border-gray-500" id="{{rec.sku}}"></td>
+        <td class="border border-dotted border-gray-500 w-64"></td>
+
+    </tr>
+    {% endfor %}
+</tbody>
+
+<script>
+    cdat = JSON.parse('{{sparkline|tojson|safe}}')
+    tab = JSON.parse('{{table_contents|tojson|safe}}')
+    var layout = {
+            height: 60, 
+            width: 230,           
+            margin: {
+                l: 1,
+                r: 1,
+                b: 1,
+                t: 1,
+                pad: 0
+            },
+            xaxis: {
+                visible: false,
+            },
+            yaxis: {
+
+                visible: false,
+                zeroline: false
+            }
+        };
+
+    for (let i = 0; i < tab.length; i++) {
+
+        var trace1 = {
+            x: (cdat['x0']),
+            y: (cdat['y0'][i]),
+            type: 'line'
+        };
+        var data = [trace1]        
+        Plotly.newPlot(tab[i]['sku'], data, layout,{displayModeBar: false});
+
+    }
+
+</script>

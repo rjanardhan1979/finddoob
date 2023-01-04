@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="chart" class="col-span-12 row-span-1 border border-dotted border-gray-300">
+
+    </div>
+</body>
+</html>
+
+<script>
+    cdat = JSON.parse('{{stock_dat|tojson|safe}}')   
+    var trace1 = {
+        x: (cdat['x0']),
+        y: (cdat['y0']),
+        type: 'bar'
+    };
+    var layout = {
+        title: {
+        text:'{{val}}',
+        font: {
+        family: 'Courier New, monospace',
+        size: 32
+        },
+        xref: 'paper',
+        x: 0.05,
+        }
+    }
+    var data = [trace1]
+    Plotly.newPlot("chart", data, layout);
+</script>
+
+<style>
+    #chart.htmx-added {
+        opacity:0;
+    }
+    #chart {
+        opacity: 1;
+        transition: opacity 500ms ease-out;
+    }
+</style>
