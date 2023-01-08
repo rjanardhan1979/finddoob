@@ -1,3 +1,5 @@
-<div class="{{color[index-1][colname]}} rounded-full w-1/2 m-1 text-center font-semibold" contenteditable id="{{color_id}}">
+<div class="{{color[index-1][colname]}} rounded-full w-1/2 m-1 text-center font-semibold OG" id="{{color_id}}" name = "n_{{color_id}}"
+hx-vars="'component_id': '{{color_id}}', 'beforeVal': '{{difference[index-1][colname]}}', 'id': '{{object['id']}}', 'field': '{{colname}}', 'color': '{{color[index-1][colname]}}' "
+hx-get="/change_editable/" hx-trigger="click" hx-target = "#{{color_id}}" hx-swap = "outerHTML">
     {{difference[index-1][colname]}}
 </div>

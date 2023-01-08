@@ -4,8 +4,6 @@
     {{afterVal}}
 </div>
 
-
-
     {% for rec in table_contents %}
         <td class="border border-dotted border-gray-500" id="{{rec.sku}}" hx-swap-oob="true" hx-swap="outerHTML">            
         </td> 
@@ -14,12 +12,15 @@
     {% for diff in mydf_diff %} 
     {% set rec_index = loop %} 
     {% for col in cols %}
-    <div class="{{mydf_diff_colors[rec_index.index-1][col]}} jamadu rounded-full w-1/2 m-1 text-center font-semibold" contenteditable hx-swap-oob="true" hx-swap="outerHTML" id="color_{{col}}_{{id}}">
+
+    <div class="{{mydf_diff_colors[rec_index.index-1][col]}} jamadu rounded-full w-1/2 m-1 text-center font-semibold" hx-swap-oob="true" hx-swap="outerHTML" id="color_{{col}}_{{id}}"
+    name="n_color_{{col}}_{{id}}" hx-vars="'component_id': 'color_{{col}}_{{id}}', 'beforeVal': '{{diff[col]}}', 'id': '{{id}}', 'field': '{{col}}', 'color': '{{mydf_diff_colors[rec_index.index-1][col]}}' "
+    hx-get="/change_editable/" hx-trigger="click" hx-target = "#color_{{col}}_{{id}}" hx-swap = "outerHTML"
+    >
         {{diff[col]}} 
     </div>
     {% endfor %}
-    {% endfor %}
-    
+    {% endfor %}    
 
 
 <script>

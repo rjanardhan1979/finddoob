@@ -1,7 +1,7 @@
 <tbody id="mainTable" name="mainTable">
     {% for rec in table_contents %}
     {% set rec_index = loop %}
-    <tr class="border border-dotted border-gray-500">
+    <tr class="border border-dotted border-gray-500" id="{{rec.id}}">
         {% for col in cols %}
 
         {% with object = rec, colname = col, color = mydf_diff_colors, difference = mydf_diff, index = rec_index.index,

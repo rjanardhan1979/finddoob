@@ -1,0 +1,5 @@
+<input id="{{component_id}}" name= "{{component_id}}" type="text" value={{beforeVal}} class="w-10"
+    hx-post="/change_noteditable/?id={{id}}&component_id={{component_id}}&beforeVal={{beforeVal}}&field={{field}}"
+    hx-trigger="change" hx-target="#{{component_id}}" hx-swap="outerHTML" 
+   
+    >

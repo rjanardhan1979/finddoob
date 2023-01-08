@@ -1,0 +1,72 @@
+<div id="{{component_id}}" name="n_{{component_id}}"
+    class="{{mydf_diff_colors[0][field]}} rounded-full w-1/2 m-1 text-center font-semibold doob" hx-get="/change_editable/"
+    hx-trigger="click" hx-target="#{{component_id}}" hx-swap="outerHTML"
+    hx-vars="{'component_id': '{{component_id}}', 'beforeVal': '{{afterVal}}', 'id': '{{id}}', 'field': '{{field}}'}">
+    {{afterVal}}
+</div>
+
+{% for rec in table_contents %}
+
+{% set rec_index = loop %}
+
+{% for col in cols %}
+<div id="c_{{col}}_{{id}}" name="n_c_{{col}}_{{id}}" class="w-full" hx-get="/editableEg/" hx-trigger="click"
+    hx-target="#c_{{col}}_{{id}}" hx-swap="outerHTML" hx-swap-oob="true"
+    hx-vars="{'component_id': 'c_{{col}}_{{id}}', 'beforeVal': '{{rec[col]}}', 'id': '{{id}}', 'field': '{{field}}'}">
+    {{rec[col]}}
+</div>
+
+{% if col != field %}
+<div class="{{mydf_diff_colors[rec_index.index-1][col]}} Second rounded-full w-1/2 m-1 text-center font-semibold"
+    id="color_{{col}}_{{id}}" name="n_color_{{col}}_{{id}}" hx-swap-oob="true"
+    hx-vars="'component_id': 'color_{{col}}_{{id}}', 'beforeVal': '{{mydf_diff[rec_index.index-1][col]}}', 'id': '{{id}}', 'field': '{{col}}', 'color': '{{mydf_diff_colors[rec_index.index-1][col]}}' "
+    hx-get="/change_editable/" hx-trigger="click" hx-target="#color_{{col}}_{{id}}" hx-swap="outerHTML">
+    {{mydf_diff[rec_index.index-1][col]}}
+</div>
+{% endif %}
+
+{% endfor %}
+{% endfor %}
+
+<script>
+
+    showChart()
+
+    function showChart() {
+        cdat = JSON.parse('{{sparkline|tojson|safe}}')
+        tab = JSON.parse('{{table_contents|tojson|safe}}')
+        console.log(cdat)
+        var layout = {
+            height: 60,
+            width: 230,
+            margin: {
+                l: 1,
+                r: 1,
+                b: 1,
+                t: 1,
+                pad: 0
+            },
+            xaxis: {
+                visible: false,
+            },
+            yaxis: {
+
+                visible: false,
+                zeroline: false
+            }
+        };
+
+        for (let i = 0; i < tab.length; i++) {
+
+            var trace1 = {
+                x: (cdat['x0']),
+                y: (cdat['y0'][i]),
+                type: 'line'
+            };
+            var data = [trace1]
+            Plotly.newPlot(tab[i]['sku'], data, layout, { displayModeBar: false });
+        }
+    }
+
+
+</script>
